@@ -71,6 +71,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {"status": "online", "service": "VEKTRA AI Vector Engine", "version": "1.0.0"}
+
 # --- OpenAI Client (9Router / OpenRouter / Custom LLM API) ---
 
 LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:20128/v1")
