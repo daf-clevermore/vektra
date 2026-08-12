@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 716 1081" width="716" height="1081">
+  <defs>
+    <!-- Basic Placeholder Styles -->
+    <style>
+      .bg-zone { fill: #1E1E24; }
+      .placeholder-box { fill: #2A2A32; stroke: #4A4A5A; stroke-width: 4; stroke-dasharray: 12 12; }
+      .placeholder-text { font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; fill: #8E8E9E; text-anchor: middle; dominant-baseline: central; }
+      .placeholder-subtext { font-family: 'Inter', -apple-system, sans-serif; font-weight: 500; fill: #6E6E7E; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================== -->
+  <!-- 0. CANVAS BACKGROUND (716 x 1081)          -->
+  <!-- ========================================== -->
+  <rect width="716" height="1081" class="bg-zone" />
+
+  <!-- ========================================== -->
+  <!-- 1. LOGO FLYERS (Top Zone)                  -->
+  <!-- Bounding Box: X:0, Y:64, W:347, H:77       -->
+  <!-- ========================================== -->
+  <g id="ZONE_LOGO" transform="translate(0, 64)">
+    <rect width="347" height="77" rx="12" class="placeholder-box" />
+    <text x="173.5" y="38.5" font-size="22" class="placeholder-text">[ LOGO FLYERS ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 2. GAMBAR FLYERS (Image Zone)              -->
+  <!-- Bounding Box: X:72, Y:187, W:572, H:205    -->
+  <!-- ========================================== -->
+  <g id="ZONE_IMAGE" transform="translate(72, 187)">
+    <rect width="572" height="205" rx="16" class="placeholder-box" />
+    <text x="286" y="90" font-size="32" class="placeholder-text">[ GAMBAR FLYERS ]</text>
+    <text x="286" y="130" font-size="16" class="placeholder-subtext">Inject Event Illustration / Raster Here</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 3. JUDUL FLYERS (Headline Zone)            -->
+  <!-- Bounding Box: X:72, Y:406, W:572, H:156    -->
+  <!-- ========================================== -->
+  <g id="ZONE_TITLE" transform="translate(72, 406)">
+    <rect width="572" height="156" rx="16" class="placeholder-box" />
+    <text x="286" y="68" font-size="32" class="placeholder-text">[ JUDUL FLYERS ]</text>
+    <text x="286" y="105" font-size="16" class="placeholder-subtext">Main Event Title / Campaign Header</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 4. DESKRIPSI FLYERS (Description Zone)     -->
+  <!-- Bounding Box: X:72, Y:576, W:572, H:265    -->
+  <!-- ========================================== -->
+  <g id="ZONE_DESCRIPTION" transform="translate(72, 576)">
+    <rect width="572" height="265" rx="16" class="placeholder-box" />
+    <text x="286" y="115" font-size="28" class="placeholder-text">[ DESKRIPSI FLYERS ]</text>
+    <text x="286" y="155" font-size="16" class="placeholder-subtext">Event Details, Speaker Info, or Agenda</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 5. TEMPAT TANGGAL ACARA (Info Zone)        -->
+  <!-- Bounding Box: X:72, Y:855, W:572, H:98     -->
+  <!-- ========================================== -->
+  <g id="ZONE_DATETIME" transform="translate(72, 855)">
+    <rect width="572" height="98" rx="12" class="placeholder-box" />
+    <text x="286" y="49" font-size="22" class="placeholder-text">[ TEMPAT TANGGAL ACARA ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 6. SOSIAL MEDIA (Footer Zone)              -->
+  <!-- Bounding Box: X:72, Y:976, W:572, H:56     -->
+  <!-- ========================================== -->
+  <g id="ZONE_SOCIALS" transform="translate(72, 976)">
+    <rect width="572" height="56" rx="10" class="placeholder-box" />
+    <text x="286" y="28" font-size="18" class="placeholder-text">[ SOSIAL MEDIA ]</text>
+  </g>
+</svg>

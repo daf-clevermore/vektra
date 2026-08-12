@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <!-- Basic Placeholder Styles -->
+    <style>
+      .bg-zone { fill: #1E1E24; }
+      .placeholder-box { fill: #2A2A32; stroke: #4A4A5A; stroke-width: 4; stroke-dasharray: 12 12; }
+      .placeholder-text { font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; fill: #8E8E9E; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- ========================================== -->
+  <!-- 0. CANVAS BACKGROUND (1920 x 1080)         -->
+  <!-- ========================================== -->
+  <rect width="1920" height="1080" class="bg-zone" />
+
+  <!-- ========================================== -->
+  <!-- 1. LOGO AREA (Top Right Zone)              -->
+  <!-- Bounding Box: X:1550, Y:60, W:300, H:100   -->
+  <!-- ========================================== -->
+  <g id="ZONE_LOGO" transform="translate(1550, 60)">
+    <rect width="300" height="100" rx="16" class="placeholder-box" />
+    <text x="150" y="58" font-size="24" class="placeholder-text">[ LOGO / BRANDING ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 2. PRODUCT IMAGE AREA (Right Column)       -->
+  <!-- Bounding Box: X:1040, Y:200, W:810, H:660  -->
+  <!-- *AI will inject <image> or hero vector here-->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_IMAGE" transform="translate(1040, 200)">
+    <rect width="810" height="660" rx="24" class="placeholder-box" />
+    <text x="405" y="330" font-size="36" class="placeholder-text">[ HERO PRODUCT IMAGE / ILLUSTRATION ]</text>
+    <text x="405" y="380" font-size="20" class="placeholder-text">Inject Pollinations Raster or Detailed Vector Here</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 3. MAIN HEADLINE AREA (Top Left Column)    -->
+  <!-- Bounding Box: X:70, Y:80, W:910, H:420     -->
+  <!-- ========================================== -->
+  <g id="ZONE_HEADLINE" transform="translate(70, 80)">
+    <rect width="910" height="420" rx="24" class="placeholder-box" />
+    <text x="455" y="210" font-size="42" class="placeholder-text">[ JUDUL UTAMA BANNER ]</text>
+    <text x="455" y="260" font-size="22" class="placeholder-text">Large Bold Typography (2-3 Lines Max)</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 4. PRODUCT DESCRIPTION AREA (Mid Left)     -->
+  <!-- Bounding Box: X:70, Y:530, W:910, H:280    -->
+  <!-- ========================================== -->
+  <g id="ZONE_DESCRIPTION" transform="translate(70, 530)">
+    <rect width="910" height="280" rx="24" class="placeholder-box" />
+    <text x="455" y="140" font-size="32" class="placeholder-text">[ DESKRIPSI &amp; FITUR PRODUK ]</text>
+    <text x="455" y="185" font-size="20" class="placeholder-text">Subtitle, Key Benefits, or Bullet Points</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 5. PROMO / CONTACT / QR CODE (Bottom Left) -->
+  <!-- Replaced UI Button for Print Media         -->
+  <!-- Bounding Box: X:70, Y:840, W:910, H:180    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRINT_INFO" transform="translate(70, 840)">
+    <rect width="910" height="180" rx="20" class="placeholder-box" />
+    <text x="455" y="90" font-size="28" class="placeholder-text">[ INFO PROMO / ALAMAT / QR CODE AREA ]</text>
+    <text x="455" y="130" font-size="18" class="placeholder-text">Print Banner Call-to-Action (No Interactive Button)</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 6. SOCIAL MEDIA & WEBSITE (Bottom Right)   -->
+  <!-- Bounding Box: X:1040, Y:890, W:810, H:130  -->
+  <!-- ========================================== -->
+  <g id="ZONE_SOCIALS" transform="translate(1040, 890)">
+    <rect width="810" height="130" rx="20" class="placeholder-box" />
+    <text x="405" y="72" font-size="24" class="placeholder-text">[ SOCIAL MEDIA &amp; WEBSITE INFO ]</text>
+  </g>
+</svg>

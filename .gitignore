@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+build/
+
+# logs
+*.log
+next-dev.log
+build2.log
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# environment & IDE
+.env
+.env.local
+.vscode/
+.idea/
+.DS_Store
+tsconfig.tsbuildinfo

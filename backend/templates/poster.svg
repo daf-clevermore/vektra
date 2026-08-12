@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 716 1081" width="716" height="1081">
+  <defs>
+    <!-- Basic Placeholder Styles -->
+    <style>
+      .bg-zone { fill: #1E1E24; }
+      .placeholder-box { fill: #2A2A32; stroke: #4A4A5A; stroke-width: 4; stroke-dasharray: 12 12; }
+      .placeholder-text { font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; fill: #8E8E9E; text-anchor: middle; dominant-baseline: central; }
+      .placeholder-subtext { font-family: 'Inter', -apple-system, sans-serif; font-weight: 500; fill: #6E6E7E; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================== -->
+  <!-- 0. CANVAS BACKGROUND (716 x 1081)          -->
+  <!-- ========================================== -->
+  <rect width="716" height="1081" class="bg-zone" />
+
+  <!-- ========================================== -->
+  <!-- 1. HEADER / TITLE AREA                     -->
+  <!-- Bounding Box: X:29, Y:19, W:658, H:296     -->
+  <!-- ========================================== -->
+  <g id="ZONE_HEADER" transform="translate(29, 19)">
+    <rect width="658" height="296" rx="20" class="placeholder-box" />
+    <text x="329" y="130" font-size="42" class="placeholder-text">[ JUDUL PRODUK / HEADLINE ]</text>
+    <text x="329" y="175" font-size="18" class="placeholder-subtext">Main Campaign Title or Catalog Branding</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 2. PRODUCT 1 - IMAGE (Row 1 Left)          -->
+  <!-- Bounding Box: X:22, Y:366, W:336, H:225    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_1_IMAGE" transform="translate(22, 366)">
+    <rect width="336" height="225" rx="16" class="placeholder-box" />
+    <text x="168" y="100" font-size="28" class="placeholder-text">[ GAMBAR PRODUK 1 ]</text>
+    <text x="168" y="135" font-size="14" class="placeholder-subtext">Inject Product Photo / Vector Here</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 3. PRODUCT 1 - NAME (Row 1 Right Top)      -->
+  <!-- Bounding Box: X:386, Y:398, W:301, H:97    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_1_NAME" transform="translate(386, 398)">
+    <rect width="301" height="97" rx="12" class="placeholder-box" />
+    <text x="150.5" y="48.5" font-size="22" class="placeholder-text">[ NAMA PRODUK ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 4. PRODUCT 1 - PRICE (Row 1 Right Bottom)  -->
+  <!-- Bounding Box: X:386, Y:515, W:301, H:42    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_1_PRICE" transform="translate(386, 515)">
+    <rect width="301" height="42" rx="8" class="placeholder-box" />
+    <text x="150.5" y="21" font-size="16" class="placeholder-text">[ HARGA PRODUK ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 5. PRODUCT 2 - IMAGE (Row 2 Left)          -->
+  <!-- Bounding Box: X:22, Y:654, W:336, H:225    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_2_IMAGE" transform="translate(22, 654)">
+    <rect width="336" height="225" rx="16" class="placeholder-box" />
+    <text x="168" y="100" font-size="28" class="placeholder-text">[ GAMBAR PRODUK 2 ]</text>
+    <text x="168" y="135" font-size="14" class="placeholder-subtext">Inject Product Photo / Vector Here</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 6. PRODUCT 2 - NAME (Row 2 Right Top)      -->
+  <!-- Bounding Box: X:386, Y:686, W:301, H:97    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_2_NAME" transform="translate(386, 686)">
+    <rect width="301" height="97" rx="12" class="placeholder-box" />
+    <text x="150.5" y="48.5" font-size="22" class="placeholder-text">[ NAMA PRODUK ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 7. PRODUCT 2 - PRICE (Row 2 Right Bottom)  -->
+  <!-- Bounding Box: X:386, Y:803, W:301, H:42    -->
+  <!-- ========================================== -->
+  <g id="ZONE_PRODUCT_2_PRICE" transform="translate(386, 803)">
+    <rect width="301" height="42" rx="8" class="placeholder-box" />
+    <text x="150.5" y="21" font-size="16" class="placeholder-text">[ HARGA PRODUK ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 8. WEBSITE INFO (Footer Left)              -->
+  <!-- Bounding Box: X:22, Y:952, W:336, H:42     -->
+  <!-- ========================================== -->
+  <g id="ZONE_WEBSITE" transform="translate(22, 952)">
+    <rect width="336" height="42" rx="8" class="placeholder-box" />
+    <text x="168" y="21" font-size="16" class="placeholder-text">[ WEBSITE INFO ]</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 9. SOCIAL MEDIA INFO (Footer Right)        -->
+  <!-- Bounding Box: X:369, Y:952, W:336, H:82    -->
+  <!-- ========================================== -->
+  <g id="ZONE_SOCIALS" transform="translate(369, 952)">
+    <rect width="336" height="82" rx="12" class="placeholder-box" />
+    <text x="168" y="41" font-size="20" class="placeholder-text">[ SOSIAL MEDIA INFO ]</text>
+  </g>
+</svg>
