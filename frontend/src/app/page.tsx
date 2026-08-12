@@ -630,15 +630,9 @@ export default function Home() {
         } catch (err) {
             let errMsg = "Terjadi kesalahan. Silakan coba lagi.";
             if (err instanceof TypeError && err.message.includes("fetch")) {
-                errMsg = "❌ Tidak dapat terhubung ke server AI. Pastikan backend berjalan di localhost:8000.";
+                errMsg = "❌ Tidak dapat terhubung ke server AI. Pastikan backend berjalan.";
             } else if (err instanceof Error) {
-                if (err.message.includes("502") || err.message.includes("503")) {
-                    errMsg = "⚠️ Server AI sedang tidak tersedia. Coba lagi beberapa saat.";
-                } else if (err.message.includes("LLM")) {
-                    errMsg = "⚠️ AI tidak merespons. Coba sederhanakan prompt Anda.";
-                } else {
-                    errMsg = err.message;
-                }
+                errMsg = err.message;
             }
             setError(errMsg);
             // Hapus pesan user terakhir dari history jika gagal (hindari ghost turn)
