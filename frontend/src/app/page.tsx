@@ -574,7 +574,10 @@ export default function Home() {
         }));
 
         try {
-            const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            let apiBaseUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").trim().replace(/\/+$/, "");
+            if (!apiBaseUrl.startsWith("http://") && !apiBaseUrl.startsWith("https://")) {
+                apiBaseUrl = `https://${apiBaseUrl}`;
+            }
             const res = await fetch(`${apiBaseUrl}/api/generate`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
