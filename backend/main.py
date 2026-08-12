@@ -208,8 +208,9 @@ async def generate_design(request: ChatRequest):
     ] + [{"role": m.role, "content": m.content} for m in request.messages]
 
     try:
+        model_name = os.getenv("MODEL_NAME", "gemini-2.0-flash")
         response = client.chat.completions.create(
-            model="backend",
+            model=model_name,
             messages=llm_messages,
             temperature=0.7,
         )
