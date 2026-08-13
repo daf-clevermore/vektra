@@ -1229,15 +1229,15 @@ export default function Home() {
                 </div>
             )}
             {/* ── Top Header Bar ──────────────────────────────────────── */}
-            <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0 gap-2 overflow-hidden">
-                {/* Logo & Back to Dashboard */}
-                <div className="flex items-center gap-3 shrink-0">
+            <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0 gap-2 overflow-hidden relative">
+                {/* Logo & Back to Dashboard (Fixed on left, never overlapped) */}
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-10 bg-[#16161e] pr-2">
                     <button
                         onClick={() => setViewMode("dashboard")}
                         title="Kembali ke Dashboard Utama"
                         className="flex items-center gap-2.5 group focus:outline-none"
                     >
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-violet-900/40 group-hover:scale-105 transition-transform">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-violet-900/40 group-hover:scale-105 transition-transform shrink-0">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path
                                     strokeLinecap="round"
@@ -1247,11 +1247,11 @@ export default function Home() {
                                 />
                             </svg>
                         </div>
-                        <div className="text-left">
-                            <h1 className="text-sm font-bold text-[#e8e8f0] leading-tight tracking-tight group-hover:text-violet-300 transition-colors">
+                        <div className="text-left shrink-0">
+                            <h1 className="text-xs sm:text-sm font-bold text-[#e8e8f0] leading-tight tracking-tight group-hover:text-violet-300 transition-colors">
                                 VEKTRA
                             </h1>
-                            <p className="text-[10px] text-[#6b6b80] leading-tight flex items-center gap-1">
+                            <p className="text-[9px] sm:text-[10px] text-[#6b6b80] leading-tight flex items-center gap-1">
                                 <span>← Dashboard</span>
                             </p>
                         </div>
@@ -1276,8 +1276,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* ── Utility Actions (scrollable horizontally on small screens) ── */}
-                <div className="flex-1 lg:flex-initial flex items-center justify-end gap-1 sm:gap-1.5 shrink-0 overflow-x-auto no-scrollbar py-1">
+                {/* ── Utility Actions (scrollable horizontally on small screens without pushing logo) ── */}
+                <div className="flex-1 min-w-0 flex items-center justify-end gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1">
                     {/* Mobile Panel Toggles (visible only on lg:hidden) */}
                     <div className="flex items-center gap-1 lg:hidden">
                         <button
