@@ -225,28 +225,39 @@ async def generate_design(request: ChatRequest):
 
     try:
         client = get_openai_client()
-        raw_model = os.getenv("MODEL_NAME", "gemini-2.0-flash").strip()
-        model_name = raw_model.replace("models/", "")
-        if model_name in ["gemini-1.5-flash", "1.5-flash"]:
-            model_name = "gemini-2.0-flash"
+        requested_model = os.getenv("MODEL_NAME", "gemini-2.5-flash").strip().replace("models/", "")
 
-        print(f"[INFO] Requesting LLM completion with model: {model_name}")
-        try:
-            response = client.chat.completions.create(
-                model=model_name,
-                messages=llm_messages,
-                temperature=0.7,
-            )
-        except Exception as model_err:
-            if "404" in str(model_err) or "not found" in str(model_err).lower():
-                print(f"[WARN] Model '{model_name}' failed with 404, retrying with fallback 'gemini-2.0-flash'...")
+        candidates = [requested_model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash-exp", "gemini-2.5-pro"]
+        unique_candidates = []
+        for c in candidates:
+            if c and c not in unique_candidates:
+                unique_candidates.append(c)
+
+        response = None
+        last_error = None
+        for target_model in unique_candidates:
+            try:
+                print(f"[INFO] Requesting LLM completion with model: {target_model}")
                 response = client.chat.completions.create(
-                    model="gemini-2.0-flash",
+                    model=target_model,
                     messages=llm_messages,
                     temperature=0.7,
                 )
-            else:
-                raise model_err
+                print(f"[SUCCESS] Completion received using model: {target_model}")
+                break
+            except Exception as model_err:
+                last_error = model_err
+                err_str = str(model_err)
+                if "404" in err_str or "not found" in err_str.lower() or "no longer available" in err_str.lower():
+                    print(f"[WARN] Model '{target_model}' not available (404/deprecated), trying next candidate...")
+                    continue
+                else:
+                    raise model_err
+
+        if response is None:
+            if last_error:
+                raise last_error
+            raise ValueError("No compatible Gemini model found.")
 
         raw = response.choices[0].message.content or ""
         svg = clean_svg(raw)
