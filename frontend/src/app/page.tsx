@@ -1299,8 +1299,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* ── Utility Actions (scrollable horizontally on small screens without pushing logo) ── */}
-                <div className="flex-1 min-w-0 flex items-center justify-start sm:justify-end gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1">
+                {/* ── Utility Actions (scrollable horizontally only on mobile screens) ── */}
+                <div className="flex-1 min-w-0 flex items-center justify-start sm:justify-end gap-1 sm:gap-1.5 max-sm:overflow-x-auto sm:overflow-visible no-scrollbar py-1">
                     {/* Mobile Panel Toggles (visible only on lg:hidden) */}
                     <div className="flex items-center gap-1 lg:hidden">
                         <button
