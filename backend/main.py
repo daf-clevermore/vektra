@@ -225,12 +225,28 @@ async def generate_design(request: ChatRequest):
 
     try:
         client = get_openai_client()
-        model_name = os.getenv("MODEL_NAME", "gemini-1.5-flash")
-        response = client.chat.completions.create(
-            model=model_name,
-            messages=llm_messages,
-            temperature=0.7,
-        )
+        raw_model = os.getenv("MODEL_NAME", "gemini-2.0-flash").strip()
+        model_name = raw_model.replace("models/", "")
+        if model_name in ["gemini-1.5-flash", "1.5-flash"]:
+            model_name = "gemini-2.0-flash"
+
+        print(f"[INFO] Requesting LLM completion with model: {model_name}")
+        try:
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=llm_messages,
+                temperature=0.7,
+            )
+        except Exception as model_err:
+            if "404" in str(model_err) or "not found" in str(model_err).lower():
+                print(f"[WARN] Model '{model_name}' failed with 404, retrying with fallback 'gemini-2.0-flash'...")
+                response = client.chat.completions.create(
+                    model="gemini-2.0-flash",
+                    messages=llm_messages,
+                    temperature=0.7,
+                )
+            else:
+                raise model_err
 
         raw = response.choices[0].message.content or ""
         svg = clean_svg(raw)
