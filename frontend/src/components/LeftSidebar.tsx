@@ -175,7 +175,7 @@ export default function LeftSidebar({
     return (
         <aside className={`bg-[#1a1a22] border-r border-[#2a2a38] flex flex-col h-full select-none transition-all duration-300 ${
             mobileOpen
-                ? "fixed inset-y-0 left-0 z-50 w-72 shadow-2xl"
+                ? "fixed inset-y-0 left-0 z-50 w-full sm:w-72 shadow-2xl"
                 : "hidden lg:flex w-64 shrink-0"
         }`}>
             {/* Header & Quick Action */}

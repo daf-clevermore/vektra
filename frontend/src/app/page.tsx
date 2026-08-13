@@ -1712,68 +1712,70 @@ export default function Home() {
                         </button>
                     </div>
 
-                    {/* Quick Mobile Bottom Chat Prompt Bar (fixed anchored at viewport bottom on lg:hidden) */}
-                    <div className="lg:hidden p-2.5 bg-[#14141e]/98 backdrop-blur-xl border-t border-[#2a2a38] z-40 flex flex-col gap-2 shrink-0 select-none shadow-2xl sticky bottom-0 left-0 right-0">
-                        <div className="flex items-center justify-between text-[10px] text-[#808098] px-1">
-                            <span className="flex items-center gap-1.5 font-medium">
-                                <span className={`w-1.5 h-1.5 rounded-full ${loading ? "bg-amber-400 animate-pulse" : "bg-emerald-400"}`} />
-                                {loading ? "Sedang merancang desain AI..." : "Asisten AI ready"}
-                            </span>
-                            <button
-                                onClick={() => setMobileRightOpen(true)}
-                                className="text-violet-400 font-semibold hover:underline"
-                            >
-                                Obrolan Lengkap ({chatHistory.length}) →
-                            </button>
-                        </div>
-                        <div className="flex items-end gap-2 bg-[#0d0d14] border border-[#2a2a38] focus-within:border-violet-500/60 rounded-xl p-2 transition-colors">
-                            <button
-                                type="button"
-                                onClick={() => globalImageInputRef.current?.click()}
-                                disabled={loading}
-                                title="Unggah gambar ke kanvas"
-                                className="p-1.5 rounded-lg text-[#808098] hover:text-violet-300 hover:bg-violet-900/30 transition-all shrink-0 mb-0.5"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </button>
-                            <textarea
-                                value={chatInput}
-                                onChange={(e) => setChatInput(e.target.value)}
-                                placeholder="Jelaskan kebutuhan desain UMKM Anda (ketik @ untuk sebut layer)..."
-                                rows={1}
-                                disabled={loading}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter" && !e.shiftKey) {
-                                        e.preventDefault();
+                    {/* Quick Mobile Bottom Chat Prompt Bar (fixed anchored at viewport bottom on lg:hidden, hidden when drawers are open) */}
+                    {!mobileLeftOpen && !mobileRightOpen && (
+                        <div className="lg:hidden p-2.5 bg-[#14141e]/98 backdrop-blur-xl border-t border-[#2a2a38] z-40 flex flex-col gap-2 shrink-0 select-none shadow-2xl sticky bottom-0 left-0 right-0">
+                            <div className="flex items-center justify-between text-[10px] text-[#808098] px-1">
+                                <span className="flex items-center gap-1.5 font-medium">
+                                    <span className={`w-1.5 h-1.5 rounded-full ${loading ? "bg-amber-400 animate-pulse" : "bg-emerald-400"}`} />
+                                    {loading ? "Sedang merancang desain AI..." : "Asisten AI ready"}
+                                </span>
+                                <button
+                                    onClick={() => setMobileRightOpen(true)}
+                                    className="text-violet-400 font-semibold hover:underline"
+                                >
+                                    Obrolan Lengkap ({chatHistory.length}) →
+                                </button>
+                            </div>
+                            <div className="flex items-end gap-2 bg-[#0d0d14] border border-[#2a2a38] focus-within:border-violet-500/60 rounded-xl p-2 transition-colors">
+                                <button
+                                    type="button"
+                                    onClick={() => globalImageInputRef.current?.click()}
+                                    disabled={loading}
+                                    title="Unggah gambar ke kanvas"
+                                    className="p-1.5 rounded-lg text-[#808098] hover:text-violet-300 hover:bg-violet-900/30 transition-all shrink-0 mb-0.5"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </button>
+                                <textarea
+                                    value={chatInput}
+                                    onChange={(e) => setChatInput(e.target.value)}
+                                    placeholder="Jelaskan kebutuhan desain UMKM Anda (ketik @ untuk sebut layer)..."
+                                    rows={1}
+                                    disabled={loading}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            if (!loading && chatInput.trim()) {
+                                                handleSendMessage();
+                                            }
+                                        }
+                                    }}
+                                    className="flex-1 bg-transparent text-xs text-[#e8e8f0] placeholder-[#505068] focus:outline-none resize-none max-h-20 overflow-y-auto leading-relaxed"
+                                />
+                                <button
+                                    onClick={() => {
                                         if (!loading && chatInput.trim()) {
                                             handleSendMessage();
                                         }
-                                    }
-                                }}
-                                className="flex-1 bg-transparent text-xs text-[#e8e8f0] placeholder-[#505068] focus:outline-none resize-none max-h-20 overflow-y-auto leading-relaxed"
-                            />
-                            <button
-                                onClick={() => {
-                                    if (!loading && chatInput.trim()) {
-                                        handleSendMessage();
-                                    }
-                                }}
-                                disabled={loading || !chatInput.trim()}
-                                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-violet-600 hover:bg-violet-500 disabled:opacity-40 text-white shrink-0 shadow-md flex items-center gap-1 transition-all"
-                            >
-                                {loading ? (
-                                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                ) : (
-                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                    </svg>
-                                )}
-                                <span>Kirim</span>
-                            </button>
+                                    }}
+                                    disabled={loading || !chatInput.trim()}
+                                    className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-violet-600 hover:bg-violet-500 disabled:opacity-40 text-white shrink-0 shadow-md flex items-center gap-1 transition-all"
+                                >
+                                    {loading ? (
+                                        <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    ) : (
+                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                        </svg>
+                                    )}
+                                    <span>Kirim</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </main>
 
                 {/* Right Sidebar - AI Chat + Properties tabs */}

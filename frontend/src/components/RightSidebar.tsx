@@ -629,7 +629,7 @@ export default function RightSidebar({
     return (
         <aside className={`bg-[#1a1a22] border-l border-[#2a2a38] flex flex-col h-full select-none transition-all duration-300 ${
             mobileOpen
-                ? "fixed inset-y-0 right-0 z-50 w-80 shadow-2xl"
+                ? "fixed inset-y-0 right-0 z-50 w-full sm:w-80 shadow-2xl"
                 : "hidden lg:flex w-72 shrink-0"
         }`}>
             {/* ── Tab Bar ──────────────────────────────────────────────── */}
