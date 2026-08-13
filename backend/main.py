@@ -78,7 +78,12 @@ def read_root():
 # --- OpenAI Client (Google AI Studio OpenAI-compatible Endpoint) ---
 
 def get_openai_client() -> OpenAI:
-    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("LLM_API_KEY") or "missing_gemini_api_key"
+    api_key = (os.environ.get("GEMINI_API_KEY") or os.environ.get("LLM_API_KEY") or "").strip()
+    if not api_key:
+        raise ValueError(
+            "GEMINI_API_KEY tidak ditemukan di environment variables. "
+            "Harap tambahkan GEMINI_API_KEY di Railway Environment Variables (Services -> Variables)."
+        )
     base_url = os.environ.get("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
     return OpenAI(
         api_key=api_key,
