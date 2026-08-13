@@ -88,6 +88,7 @@ def get_openai_client() -> OpenAI:
     return OpenAI(
         api_key=api_key,
         base_url=base_url,
+        default_headers={"x-goog-api-key": api_key},
     )
 
 
