@@ -1252,9 +1252,9 @@ export default function Home() {
             />
 
             {/* ── Top Header Bar ──────────────────────────────────────── */}
-            <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0 gap-2 overflow-hidden relative">
+            <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0 gap-2 relative z-30">
                 {/* Logo & Back to Dashboard (Fixed on left, never overlapped) */}
-                <div className="flex items-center gap-2 shrink-0 z-20 bg-[#16161e] border-r border-[#2a2a38]/40 pr-2">
+                <div className="flex items-center gap-2 shrink-0 z-20 bg-[#16161e] pr-2">
                     <button
                         onClick={() => setViewMode("dashboard")}
                         title="Kembali ke Dashboard Utama"
@@ -1300,7 +1300,7 @@ export default function Home() {
                 </div>
 
                 {/* ── Utility Actions (scrollable horizontally on small screens without pushing logo) ── */}
-                <div className="flex-1 min-w-0 flex items-center justify-end gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1">
+                <div className="flex-1 min-w-0 flex items-center justify-start sm:justify-end gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1">
                     {/* Mobile Panel Toggles (visible only on lg:hidden) */}
                     <div className="flex items-center gap-1 lg:hidden">
                         <button
@@ -1366,17 +1366,17 @@ export default function Home() {
                     </button>
 
                     {/* Canvas Size button + popover */}
-                    <div ref={sizeMenuRef} className="relative">
+                    <div ref={sizeMenuRef} className="relative shrink-0">
                         <button
                             onClick={() => setSizeMenuOpen((o) => !o)}
                             disabled={loading}
                             title="Ubah ukuran kanvas — pilih template atau masukkan ukuran kustom"
                             className={darkUtilBtn}
                         >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2m8-16h2a2 2 0 012 2v2m0 8v2a2 2 0 01-2 2h-2" />
                             </svg>
-                            {canvasWidth} × {canvasHeight}
+                            <span>{canvasWidth} × {canvasHeight}</span>
                             <svg
                                 className={`w-3 h-3 text-[#6b6b80] transition-transform ${sizeMenuOpen ? "rotate-180" : ""}`}
                                 fill="none"
@@ -1388,7 +1388,7 @@ export default function Home() {
                         </button>
 
                         {sizeMenuOpen && (
-                            <div className="absolute right-0 top-full mt-1.5 w-72 bg-[#1e1e2a] border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 p-3 z-50 select-none">
+                            <div className="fixed sm:absolute right-4 sm:right-0 top-16 sm:top-full mt-1.5 w-72 max-w-[calc(100vw-2rem)] bg-[#1e1e2a] border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/90 p-3 z-[999] select-none">
                                 {/* Template presets */}
                                 <p className="text-[10px] uppercase font-bold text-[#6b6b80] tracking-widest mb-2">
                                     Ukuran Template UMKM
@@ -1543,7 +1543,7 @@ export default function Home() {
                                 </button>
 
                                 {alignMenuOpen && (
-                                    <div className="absolute top-full mt-2 left-0 z-50 bg-[#18181f] border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 p-3 w-[200px]">
+                                    <div className="fixed sm:absolute right-4 sm:left-0 top-16 sm:top-full mt-2 w-[200px] bg-[#18181f] border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/90 p-3 z-[999]">
                                         <p className="text-[10px] uppercase tracking-widest text-[#505068] font-semibold mb-2">Horisontal</p>
                                         <div className="flex gap-1 mb-3">
                                             {[
