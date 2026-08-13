@@ -72,10 +72,45 @@ export default function Home() {
     const workspaceRef = useRef<HTMLDivElement>(null);
     const [zoom, setZoom] = useState(1);
 
-    // Pinch to zoom (trackpad 2-finger pinch) & Ctrl+Wheel zoom handler
+    // Pinch to zoom (2-finger touch & Ctrl+Wheel) zoom handler
     useEffect(() => {
         const el = workspaceRef.current;
         if (!el) return;
+
+        let initialPinchDist = 0;
+        let initialZoom = 1;
+
+        const getDistance = (t1: Touch, t2: Touch) => {
+            const dx = t1.clientX - t2.clientX;
+            const dy = t1.clientY - t2.clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        };
+
+        const handleTouchStart = (e: TouchEvent) => {
+            if (e.touches.length === 2) {
+                initialPinchDist = getDistance(e.touches[0], e.touches[1]);
+                setZoom((z) => {
+                    initialZoom = z;
+                    return z;
+                });
+            }
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            if (e.touches.length === 2 && initialPinchDist > 0) {
+                e.preventDefault();
+                const currentDist = getDistance(e.touches[0], e.touches[1]);
+                const scale = currentDist / initialPinchDist;
+                const targetZoom = Math.min(3, Math.max(0.1, Math.round(initialZoom * scale * 100) / 100));
+                setZoom(targetZoom);
+            }
+        };
+
+        const handleTouchEnd = (e: TouchEvent) => {
+            if (e.touches.length < 2) {
+                initialPinchDist = 0;
+            }
+        };
 
         const handleWheel = (e: WheelEvent) => {
             if (e.ctrlKey || e.metaKey) {
@@ -89,8 +124,15 @@ export default function Home() {
             }
         };
 
+        el.addEventListener("touchstart", handleTouchStart, { passive: true });
+        el.addEventListener("touchmove", handleTouchMove, { passive: false });
+        el.addEventListener("touchend", handleTouchEnd, { passive: true });
         el.addEventListener("wheel", handleWheel, { passive: false });
+
         return () => {
+            el.removeEventListener("touchstart", handleTouchStart);
+            el.removeEventListener("touchmove", handleTouchMove);
+            el.removeEventListener("touchend", handleTouchEnd);
             el.removeEventListener("wheel", handleWheel);
         };
     }, [viewMode]);
@@ -1603,7 +1645,7 @@ export default function Home() {
                     </div>
 
                     {/* Fixed Floating zoom controls (pin to bottom right of viewport) */}
-                    <div className="absolute bottom-4 right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
+                    <div className="absolute bottom-20 lg:bottom-4 right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
                         <button
                             onClick={() => setZoom((z) => Math.max(0.1, Math.round((z - 0.1) * 100) / 100))}
                             title="Perkecil tampilan"
@@ -1633,6 +1675,58 @@ export default function Home() {
                         >
                             Pas Layar
                         </button>
+                    </div>
+
+                    {/* Quick Mobile Bottom Chat Prompt Bar (visible on lg:hidden) */}
+                    <div className="lg:hidden p-2.5 bg-[#14141e]/95 backdrop-blur-md border-t border-[#2a2a38] z-20 flex flex-col gap-2 shrink-0 select-none">
+                        <div className="flex items-center justify-between text-[10px] text-[#808098] px-1">
+                            <span className="flex items-center gap-1.5 font-medium">
+                                <span className={`w-1.5 h-1.5 rounded-full ${loading ? "bg-amber-400 animate-pulse" : "bg-emerald-400"}`} />
+                                {loading ? "Sedang merancang desain AI..." : "Asisten AI ready"}
+                            </span>
+                            <button
+                                onClick={() => setMobileRightOpen(true)}
+                                className="text-violet-400 font-semibold hover:underline"
+                            >
+                                Obrolan Lengkap ({chatHistory.length}) →
+                            </button>
+                        </div>
+                        <div className="flex items-end gap-2 bg-[#0d0d14] border border-[#2a2a38] focus-within:border-violet-500/60 rounded-xl p-2 transition-colors">
+                            <textarea
+                                value={chatInput}
+                                onChange={(e) => setChatInput(e.target.value)}
+                                placeholder="Jelaskan kebutuhan desain UMKM Anda (ketik @ untuk sebut layer)..."
+                                rows={1}
+                                disabled={loading}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey) {
+                                        e.preventDefault();
+                                        if (!loading && chatInput.trim()) {
+                                            handleSendMessage();
+                                        }
+                                    }
+                                }}
+                                className="flex-1 bg-transparent text-xs text-[#e8e8f0] placeholder-[#505068] focus:outline-none resize-none max-h-20 overflow-y-auto leading-relaxed"
+                            />
+                            <button
+                                onClick={() => {
+                                    if (!loading && chatInput.trim()) {
+                                        handleSendMessage();
+                                    }
+                                }}
+                                disabled={loading || !chatInput.trim()}
+                                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-violet-600 hover:bg-violet-500 disabled:opacity-40 text-white shrink-0 shadow-md flex items-center gap-1 transition-all"
+                            >
+                                {loading ? (
+                                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                ) : (
+                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                    </svg>
+                                )}
+                                <span>Kirim</span>
+                            </button>
+                        </div>
                     </div>
                 </main>
 
