@@ -1206,7 +1206,7 @@ export default function Home() {
     }
 
     return (
-        <div className="h-screen h-[100dvh] flex flex-col bg-[#111115] overflow-hidden select-none">
+        <div className="fixed inset-0 w-full h-full h-[100dvh] max-h-[100dvh] flex flex-col bg-[#111115] overflow-hidden select-none">
             {/* ── Global Toast Notification ─────────────────────────── */}
             {toastMessage && (
                 <div
@@ -1229,7 +1229,7 @@ export default function Home() {
                 </div>
             )}
             {/* ── Top Header Bar ──────────────────────────────────────── */}
-            <header className="h-14 flex items-center justify-between px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0">
+            <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0 gap-2 overflow-hidden">
                 {/* Logo & Back to Dashboard */}
                 <div className="flex items-center gap-3 shrink-0">
                     <button
@@ -1276,8 +1276,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* ── Utility Actions ───────────────────────────────────── */}
-                <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                {/* ── Utility Actions (scrollable horizontally on small screens) ── */}
+                <div className="flex-1 lg:flex-initial flex items-center justify-end gap-1 sm:gap-1.5 shrink-0 overflow-x-auto no-scrollbar py-1">
                     {/* Mobile Panel Toggles (visible only on lg:hidden) */}
                     <div className="flex items-center gap-1 lg:hidden">
                         <button
