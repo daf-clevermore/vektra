@@ -75,15 +75,16 @@ app.add_middleware(
 def read_root():
     return {"status": "online", "service": "VEKTRA AI Vector Engine", "version": "1.0.0"}
 
-# --- OpenAI Client (9Router / OpenRouter / Custom LLM API) ---
+# --- OpenAI Client (Google AI Studio OpenAI-compatible Endpoint) ---
 
-LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:20128/v1")
-LLM_API_KEY = os.getenv("LLM_API_KEY", "sk-770dd69ddc51d4f9-1q0hhd-e01d53f6")
+def get_openai_client() -> OpenAI:
+    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("LLM_API_KEY") or "missing_gemini_api_key"
+    base_url = os.environ.get("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
+    return OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+    )
 
-client = OpenAI(
-    base_url=LLM_BASE_URL,
-    api_key=LLM_API_KEY,
-)
 
 SYSTEM_PROMPT = """You are a Senior Graphic Designer and expert in SVG illustration.
 
@@ -212,25 +213,28 @@ async def generate_design(request: ChatRequest):
     ] + [{"role": m.role, "content": m.content} for m in request.messages]
 
     try:
-        model_name = os.getenv("MODEL_NAME", "gemini-2.0-flash")
+        client = get_openai_client()
+        model_name = os.getenv("MODEL_NAME", "gemini-1.5-flash")
         response = client.chat.completions.create(
             model=model_name,
             messages=llm_messages,
             temperature=0.7,
         )
+
+        raw = response.choices[0].message.content or ""
+        svg = clean_svg(raw)
+        if not svg.startswith("<svg"):
+            raise ValueError(f"LLM did not return a valid SVG document. Raw start: {svg[:200]!r}")
+
+        return VectorSVGResponse(svg=svg)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"LLM error: {str(e)}")
-
-    raw = response.choices[0].message.content or ""
-
-    svg = clean_svg(raw)
-    if not svg.startswith("<svg"):
+        import traceback
+        print(f"[ERROR] LLM generation failed: {e}")
+        traceback.print_exc()
         raise HTTPException(
             status_code=500,
-            detail=f"LLM did not return a valid SVG document. Raw start: {svg[:200]!r}",
+            detail=f"LLM error: {str(e)}",
         )
-
-    return VectorSVGResponse(svg=svg)
 
 
 if __name__ == "__main__":
