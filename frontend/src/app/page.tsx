@@ -1206,7 +1206,7 @@ export default function Home() {
     }
 
     return (
-        <div className="h-screen flex flex-col bg-[#111115] overflow-hidden select-none">
+        <div className="h-screen h-[100dvh] flex flex-col bg-[#111115] overflow-hidden select-none">
             {/* ── Global Toast Notification ─────────────────────────── */}
             {toastMessage && (
                 <div
@@ -1644,8 +1644,8 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Fixed Floating zoom controls (pin to bottom right of viewport) */}
-                    <div className="absolute bottom-20 lg:bottom-4 right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
+                    {/* Fixed Floating zoom controls (positioned above bottom chat bar on mobile to prevent overlap) */}
+                    <div className="absolute bottom-28 sm:bottom-24 lg:bottom-4 right-3 sm:right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
                         <button
                             onClick={() => setZoom((z) => Math.max(0.1, Math.round((z - 0.1) * 100) / 100))}
                             title="Perkecil tampilan"
@@ -1677,8 +1677,8 @@ export default function Home() {
                         </button>
                     </div>
 
-                    {/* Quick Mobile Bottom Chat Prompt Bar (visible on lg:hidden) */}
-                    <div className="lg:hidden p-2.5 bg-[#14141e]/95 backdrop-blur-md border-t border-[#2a2a38] z-20 flex flex-col gap-2 shrink-0 select-none">
+                    {/* Quick Mobile Bottom Chat Prompt Bar (fixed anchored at viewport bottom on lg:hidden) */}
+                    <div className="lg:hidden p-2.5 bg-[#14141e]/98 backdrop-blur-xl border-t border-[#2a2a38] z-40 flex flex-col gap-2 shrink-0 select-none shadow-2xl sticky bottom-0 left-0 right-0">
                         <div className="flex items-center justify-between text-[10px] text-[#808098] px-1">
                             <span className="flex items-center gap-1.5 font-medium">
                                 <span className={`w-1.5 h-1.5 rounded-full ${loading ? "bg-amber-400 animate-pulse" : "bg-emerald-400"}`} />
