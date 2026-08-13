@@ -25,6 +25,8 @@ interface RightSidebarProps {
     generateError: string | null;
     onClearChat: () => void;
     availableLayers?: string[];
+    mobileOpen?: boolean;
+    onCloseMobile?: () => void;
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -539,6 +541,8 @@ export default function RightSidebar({
     generateError,
     onClearChat,
     availableLayers = [],
+    mobileOpen = false,
+    onCloseMobile,
 }: RightSidebarProps) {
     const [activeTab, setActiveTab] = useState<"chat" | "properties">("chat");
 
@@ -571,34 +575,49 @@ export default function RightSidebar({
     ];
 
     return (
-        <aside className="w-72 shrink-0 bg-[#1a1a22] border-l border-[#2a2a38] flex flex-col h-full select-none">
+        <aside className={`bg-[#1a1a22] border-l border-[#2a2a38] flex flex-col h-full select-none transition-all duration-300 ${
+            mobileOpen
+                ? "fixed inset-y-0 right-0 z-50 w-80 shadow-2xl"
+                : "hidden lg:flex w-72 shrink-0"
+        }`}>
             {/* ── Tab Bar ──────────────────────────────────────────────── */}
-            <div className="flex items-stretch border-b border-[#2a2a38] shrink-0 px-2 pt-2 gap-1">
-                {tabs.map((tab) => {
-                    const isActive = activeTab === tab.id;
-                    return (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`relative flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-t-lg transition-all duration-150 ${
-                                isActive
-                                    ? "bg-[#222230] text-[#e8e8f0] border border-b-0 border-[#2a2a38]"
-                                    : "text-[#6b6b80] hover:text-[#c0c0d0] hover:bg-[#1e1e28]"
-                            }`}
-                        >
-                            <span className={isActive ? "text-violet-400" : "text-[#4a4a60]"}>
-                                {tab.icon}
-                            </span>
-                            {tab.label}
-                            {tab.badge && (
-                                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-violet-400" />
-                            )}
-                            {isActive && (
-                                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-violet-500" />
-                            )}
-                        </button>
-                    );
-                })}
+            <div className="flex items-center justify-between border-b border-[#2a2a38] shrink-0 px-2 pt-2 gap-1">
+                <div className="flex items-stretch flex-1 gap-1">
+                    {tabs.map((tab) => {
+                        const isActive = activeTab === tab.id;
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`relative flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-t-lg transition-all duration-150 ${
+                                    isActive
+                                        ? "bg-[#222230] text-[#e8e8f0] border border-b-0 border-[#2a2a38]"
+                                        : "text-[#6b6b80] hover:text-[#c0c0d0] hover:bg-[#1e1e28]"
+                                }`}
+                            >
+                                <span className={isActive ? "text-violet-400" : "text-[#4a4a60]"}>
+                                    {tab.icon}
+                                </span>
+                                {tab.label}
+                                {tab.badge && (
+                                    <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-violet-400" />
+                                )}
+                                {isActive && (
+                                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-violet-500" />
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
+                {onCloseMobile && (
+                    <button
+                        onClick={onCloseMobile}
+                        className="lg:hidden p-1.5 text-[#808098] hover:text-white rounded-md mb-1"
+                        title="Tutup Panel"
+                    >
+                        ✕
+                    </button>
+                )}
             </div>
 
             {/* ── Tab Content ──────────────────────────────────────────── */}

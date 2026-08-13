@@ -57,7 +57,7 @@ export default function ProjectDrawer({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-            <div className="w-full max-w-2xl bg-[#181822] border border-[#2a2a38] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in fade-in zoom-in duration-200">
+            <div className="w-full max-w-2xl mx-4 bg-[#181822] border border-[#2a2a38] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in fade-in zoom-in duration-200">
                 {/* Header Modal */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-[#2a2a38] bg-[#1d1d2b]">
                     <div className="flex items-center gap-3">

@@ -12,6 +12,8 @@ interface LeftSidebarProps {
     onReorderLayer: (fromCanvasIndex: number, toCanvasIndex: number) => void;
     onUploadImage?: (dataUrl: string) => void;
     onRenameObject?: (obj: FabricObject, newName: string) => void;
+    mobileOpen?: boolean;
+    onCloseMobile?: () => void;
 }
 
 function DragHandleIcon() {
@@ -59,6 +61,8 @@ export default function LeftSidebar({
     onReorderLayer,
     onUploadImage,
     onRenameObject,
+    mobileOpen = false,
+    onCloseMobile,
 }: LeftSidebarProps) {
     const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
     const [dropTarget, setDropTarget] = useState<number | null>(null);
@@ -169,7 +173,11 @@ export default function LeftSidebar({
     };
 
     return (
-        <aside className="w-64 shrink-0 bg-[#1a1a22] border-r border-[#2a2a38] flex flex-col h-full select-none">
+        <aside className={`bg-[#1a1a22] border-r border-[#2a2a38] flex flex-col h-full select-none transition-all duration-300 ${
+            mobileOpen
+                ? "fixed inset-y-0 left-0 z-50 w-72 shadow-2xl"
+                : "hidden lg:flex w-64 shrink-0"
+        }`}>
             {/* Header & Quick Action */}
             <div className="p-3 border-b border-[#2a2a38] space-y-2">
                 <div className="flex items-center justify-between">
@@ -177,6 +185,15 @@ export default function LeftSidebar({
                         <DragHandleIcon />
                         Layer & Elemen ({objects.length})
                     </h2>
+                    {onCloseMobile && (
+                        <button
+                            onClick={onCloseMobile}
+                            className="lg:hidden p-1 text-[#808098] hover:text-white rounded-md"
+                            title="Tutup Panel"
+                        >
+                            ✕
+                        </button>
+                    )}
                 </div>
 
                 {/* Upload Image Action */}
