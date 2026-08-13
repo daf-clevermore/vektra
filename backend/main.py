@@ -99,9 +99,9 @@ def get_openai_client() -> OpenAI:
     )
 
 
-def call_google_native_api(system_prompt: str, messages: List[ChatMessage], api_key: str, preferred_model: str = "gemini-2.5-flash") -> str:
+def call_google_native_api(system_prompt: str, messages: List[ChatMessage], api_key: str, preferred_model: str = "gemini-3.1-flash") -> str:
     """Fallback native REST API call to Google AI Studio generateContent endpoint."""
-    models_to_try = [preferred_model, "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-pro", "gemini-2.5-pro", "gemini-1.5-flash-8b"]
+    models_to_try = [preferred_model, "gemini-3.1-flash", "gemini-3.1-flash-lite"]
     unique_models = []
     for m in models_to_try:
         if m and m not in unique_models:
@@ -283,9 +283,9 @@ async def generate_design(request: ChatRequest):
 
     try:
         client = get_openai_client()
-        requested_model = os.getenv("MODEL_NAME", "gemini-2.5-flash").strip().replace("models/", "")
+        requested_model = os.getenv("MODEL_NAME", "gemini-3.1-flash").strip().replace("models/", "")
 
-        candidates = [requested_model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash-exp", "gemini-2.5-pro"]
+        candidates = [requested_model, "gemini-3.1-flash", "gemini-3.1-flash-lite"]
         unique_candidates = []
         for c in candidates:
             if c and c not in unique_candidates:
