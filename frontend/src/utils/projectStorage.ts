@@ -22,6 +22,78 @@ export interface ProjectSession {
 
 const PROJECTS_STORAGE_KEY = "vektra_project_sessions";
 const ACTIVE_PROJECT_ID_KEY = "vektra_active_project_id";
+const FOLDERS_STORAGE_KEY = "vektra_custom_folders";
+const DEFAULT_FOLDERS = ["Aset Pemasaran", "Desain Produk"];
+
+export function getAllFolders(): string[] {
+    if (typeof window === "undefined") return DEFAULT_FOLDERS;
+    try {
+        const raw = localStorage.getItem(FOLDERS_STORAGE_KEY);
+        if (!raw) {
+            localStorage.setItem(FOLDERS_STORAGE_KEY, JSON.stringify(DEFAULT_FOLDERS));
+            return DEFAULT_FOLDERS;
+        }
+        return JSON.parse(raw);
+    } catch {
+        return DEFAULT_FOLDERS;
+    }
+}
+
+export function createFolder(folderName: string): string[] {
+    if (typeof window === "undefined") return [];
+    const trimmed = folderName.trim();
+    if (!trimmed) return getAllFolders();
+    try {
+        const folders = getAllFolders();
+        if (!folders.includes(trimmed)) {
+            folders.push(trimmed);
+            localStorage.setItem(FOLDERS_STORAGE_KEY, JSON.stringify(folders));
+        }
+        return folders;
+    } catch {
+        return getAllFolders();
+    }
+}
+
+export function deleteFolder(folderName: string): { folders: string[]; projects: ProjectSession[] } {
+    if (typeof window === "undefined") return { folders: [], projects: [] };
+    try {
+        const folders = getAllFolders().filter((f) => f !== folderName);
+        localStorage.setItem(FOLDERS_STORAGE_KEY, JSON.stringify(folders));
+
+        const projects = getAllProjects().map((p) => {
+            if (p.folder === folderName) {
+                const { folder, ...rest } = p;
+                return rest;
+            }
+            return p;
+        });
+        localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
+        return { folders, projects };
+    } catch {
+        return { folders: getAllFolders(), projects: getAllProjects() };
+    }
+}
+
+export function assignProjectToFolder(projectId: string, folderName?: string): ProjectSession[] {
+    if (typeof window === "undefined") return [];
+    try {
+        const projects = getAllProjects().map((p) => {
+            if (p.id === projectId) {
+                return {
+                    ...p,
+                    folder: folderName && folderName.trim() ? folderName.trim() : undefined,
+                    updatedAt: new Date().toISOString(),
+                };
+            }
+            return p;
+        });
+        localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
+        return projects;
+    } catch {
+        return getAllProjects();
+    }
+}
 
 export function getAllProjects(): ProjectSession[] {
     if (typeof window === "undefined") return [];
@@ -142,7 +214,7 @@ export function createNewProject(
     name?: string,
     width = 800,
     height = 600,
-    folder = "Personal Projects"
+    folder?: string
 ): ProjectSession {
     const timestamp = Date.now();
     const newProject: ProjectSession = {

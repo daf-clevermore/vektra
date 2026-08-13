@@ -8,10 +8,14 @@ import RightSidebar, { ChatMessage } from "@/components/RightSidebar";
 import ProjectDrawer from "@/components/ProjectDrawer";
 import Dashboard from "@/components/Dashboard";
 import {
+    assignProjectToFolder,
+    createFolder,
     createNewProject,
+    deleteFolder,
     deleteProject,
     duplicateProject,
     getActiveProjectId,
+    getAllFolders,
     getAllProjects,
     ProjectSession,
     saveProject,
@@ -252,15 +256,17 @@ export default function Home() {
         setRedoStack([]); // Aksi baru membatalkan opsi redo
     }, []);
 
-    // Project Sessions State
+    // Project Sessions State & Folders State
     const [projects, setProjects] = useState<ProjectSession[]>([]);
+    const [folders, setFolders] = useState<string[]>([]);
     const [activeProjectId, setActiveProjectIdState] = useState<string | null>(null);
     const [projectDrawerOpen, setProjectDrawerOpen] = useState(false);
 
-    // Initial load project sessions from localStorage
+    // Initial load project sessions & custom folders from localStorage
     useEffect(() => {
         const all = getAllProjects();
         setProjects(all);
+        setFolders(getAllFolders());
         const activeId = getActiveProjectId();
         if (activeId) {
             const found = all.find((p) => p.id === activeId);
@@ -1085,10 +1091,27 @@ export default function Home() {
     const darkUtilBtn =
         "px-3 py-1.5 text-xs font-medium text-[#c0c0d0] bg-[#222230] hover:bg-[#2a2a3a] border border-[#2a2a38] hover:border-[#3a3a50] rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150 flex items-center gap-1.5";
 
+    const handleCreateFolder = (folderName: string) => {
+        const updated = createFolder(folderName);
+        setFolders(updated);
+    };
+
+    const handleDeleteFolder = (folderName: string) => {
+        const res = deleteFolder(folderName);
+        setFolders(res.folders);
+        setProjects(res.projects);
+    };
+
+    const handleAssignFolder = (projectId: string, folderName?: string) => {
+        const updatedProjects = assignProjectToFolder(projectId, folderName);
+        setProjects(updatedProjects);
+    };
+
     if (viewMode === "dashboard") {
         return (
             <Dashboard
                 projects={projects}
+                folders={folders}
                 onSelectProject={(id) => {
                     handleSelectProject(id);
                     setViewMode("editor");
@@ -1129,6 +1152,9 @@ export default function Home() {
                 }}
                 onExportProjects={handleExportProjects}
                 onImportProjects={handleImportProjects}
+                onCreateFolder={handleCreateFolder}
+                onDeleteFolder={handleDeleteFolder}
+                onAssignFolder={handleAssignFolder}
             />
         );
     }
