@@ -101,7 +101,7 @@ def get_openai_client() -> OpenAI:
 
 def call_google_native_api(system_prompt: str, messages: List[ChatMessage], api_key: str, preferred_model: str = "gemini-2.5-flash") -> str:
     """Fallback native REST API call to Google AI Studio generateContent endpoint."""
-    models_to_try = [preferred_model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-pro"]
+    models_to_try = [preferred_model, "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-pro", "gemini-2.5-pro", "gemini-1.5-flash-8b"]
     unique_models = []
     for m in models_to_try:
         if m and m not in unique_models:
@@ -141,18 +141,17 @@ def call_google_native_api(system_prompt: str, messages: List[ChatMessage], api_
                 return text
         except urllib.error.HTTPError as http_err:
             err_body = http_err.read().decode("utf-8", errors="ignore")
-            print(f"[WARN] Native Google API call for model '{model}' failed (HTTP {http_err.code}): {err_body[:200]}")
-            if http_err.code == 404:
-                continue
-            raise ValueError(f"Google AI API Error ({http_err.code}): {err_body}")
+            print(f"[WARN] Native Google API call for model '{model}' failed (HTTP {http_err.code}): {err_body}")
+            last_error = f"HTTP {http_err.code}: {err_body}"
+            continue
         except Exception as e:
-            last_error = e
+            last_error = str(e)
             print(f"[WARN] Native Google API call for model '{model}' failed: {e}")
             continue
 
     if last_error:
-        raise last_error
-    raise ValueError("All native Google Gemini model endpoints failed.")
+        raise ValueError(f"Google Gemini API error: {last_error}")
+    raise ValueError(f"All native Google Gemini model endpoints failed. Tried models: {unique_models}")
 
 
 
