@@ -67,8 +67,8 @@ export default function ProjectDrawer({
                             </svg>
                         </div>
                         <div>
-                            <h2 className="text-base font-bold text-[#e8e8f0]">Sesi Project & Riwayat Desain</h2>
-                            <p className="text-xs text-[#787890]">Kelola dan lanjutkan sesi pembuatan desain vektor VEKTRA</p>
+                            <h2 className="text-base font-bold text-[#e8e8f0]">Daftar Proyek & Riwayat Desain</h2>
+                            <p className="text-xs text-[#787890]">Kelola dan lanjutkan sesi pembuatan desain promosi UMKM</p>
                         </div>
                     </div>
                     <button
@@ -85,7 +85,7 @@ export default function ProjectDrawer({
                 <div className="flex-1 overflow-y-auto p-6 space-y-3">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-semibold uppercase tracking-wider text-[#787890]">
-                            Daftar Project ({projects.length})
+                            Daftar Proyek ({projects.length})
                         </span>
                         <button
                             onClick={onCreateNewProject}
@@ -94,18 +94,18 @@ export default function ProjectDrawer({
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                            + Project Baru
+                            + Proyek Baru
                         </button>
                     </div>
 
                     {projects.length === 0 ? (
                         <div className="text-center py-12 border border-dashed border-[#2a2a38] rounded-xl bg-[#14141d]">
-                            <p className="text-sm text-[#787890]">Belum ada sesi project tersimpan.</p>
+                            <p className="text-sm text-[#787890]">Belum ada proyek desain yang tersimpan.</p>
                             <button
                                 onClick={onCreateNewProject}
                                 className="mt-3 text-xs text-violet-400 hover:underline font-medium"
                             >
-                                Buat project pertama Anda sekarang →
+                                Buat proyek pertama Anda sekarang →
                             </button>
                         </div>
                     ) : (
@@ -167,9 +167,9 @@ export default function ProjectDrawer({
                                                 <p className="text-[11px] text-[#787890] mt-0.5 flex items-center gap-2">
                                                     <span>{p.canvasWidth} × {p.canvasHeight} px</span>
                                                     <span>•</span>
-                                                    <span>{p.chatHistory?.length ? Math.floor(p.chatHistory.length / 2) : 0} dialog turn</span>
+                                                    <span>{p.chatHistory?.length ? Math.floor(p.chatHistory.length / 2) : 0} percakapan</span>
                                                     <span>•</span>
-                                                    <span>Update: {formatDate(p.updatedAt)}</span>
+                                                    <span>Diperbarui: {formatDate(p.updatedAt)}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -180,13 +180,13 @@ export default function ProjectDrawer({
                                                     onClick={() => onSelectProject(p.id)}
                                                     className="px-3 py-1.5 text-xs font-medium text-violet-300 bg-violet-950/40 hover:bg-violet-900/60 border border-violet-500/30 rounded-lg transition-colors"
                                                 >
-                                                    Buka Project
+                                                    Buka Proyek
                                                 </button>
                                             )}
 
                                             <button
                                                 onClick={() => handleStartEdit(p)}
-                                                title="Ubah Nama Project"
+                                                title="Ubah Nama Proyek"
                                                 className="p-1.5 text-[#787890] hover:text-[#e8e8f0] hover:bg-[#282838] rounded-lg transition-colors"
                                             >
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +196,7 @@ export default function ProjectDrawer({
 
                                             <button
                                                 onClick={() => onDeleteProject(p.id)}
-                                                title="Hapus Project"
+                                                title="Hapus Proyek"
                                                 className="p-1.5 text-[#787890] hover:text-red-400 hover:bg-red-950/30 rounded-lg transition-colors"
                                             >
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,7 +213,7 @@ export default function ProjectDrawer({
 
                 {/* Footer Modal */}
                 <div className="px-6 py-3 border-t border-[#2a2a38] bg-[#1d1d2b] flex items-center justify-between text-xs text-[#787890]">
-                    <span>Sesi project disimpan secara lokal di browser (*localStorage*).</span>
+                    <span>Semua data proyek disimpan dengan aman secara lokal di browser Anda.</span>
                     <button
                         onClick={onClose}
                         className="px-4 py-1.5 font-medium text-[#e8e8f0] bg-[#2a2a38] hover:bg-[#343446] rounded-lg transition-colors"

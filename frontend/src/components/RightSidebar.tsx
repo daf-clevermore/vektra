@@ -67,7 +67,7 @@ function ChatBubble({ msg, index }: { msg: ChatMessage; index: number }) {
                     >
                         {msg.content}
                     </div>
-                    <span className="text-[10px] text-[#3a3a50]">You</span>
+                    <span className="text-[10px] text-[#3a3a50]">Anda</span>
                 </div>
             </div>
         );
@@ -99,8 +99,8 @@ function ChatBubble({ msg, index }: { msg: ChatMessage; index: number }) {
                                     }}
                                 />
                                 <div>
-                                    <p className="text-xs font-semibold text-[#e8e8f0]">Design updated ✓</p>
-                                    <p className="text-[10px] text-[#6b6b80]">Canvas has been refreshed</p>
+                                    <p className="text-xs font-semibold text-[#e8e8f0]">Desain Diperbarui ✓</p>
+                                    <p className="text-[10px] text-[#6b6b80]">Kanvas telah diperbarui dengan desain baru</p>
                                 </div>
                             </div>
                         ) : (
@@ -108,7 +108,7 @@ function ChatBubble({ msg, index }: { msg: ChatMessage; index: number }) {
                         )}
                     </div>
                 </div>
-                <span className="text-[10px] text-[#3a3a50] pl-8">AI Assistant</span>
+                <span className="text-[10px] text-[#3a3a50] pl-8">Asisten AI</span>
             </div>
         </div>
     );
@@ -181,14 +181,14 @@ function AIChatTab({
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8]">
                         {hasHistory
-                            ? `${Math.floor(chatHistory.length / 2)} turn${Math.floor(chatHistory.length / 2) !== 1 ? "s" : ""}`
-                            : "New chat"}
+                            ? `${Math.floor(chatHistory.length / 2)} percakapan`
+                            : "Percakapan Baru"}
                     </span>
                 </div>
                 {hasHistory && (
                     <button
                         onClick={onClearChat}
-                        title="Clear conversation"
+                        title="Bersihkan Obrolan"
                         className="p-1 rounded-md text-[#4a4a60] hover:text-red-400 hover:bg-red-900/20 transition-all"
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,17 +209,17 @@ function AIChatTab({
                             </svg>
                         </div>
                         <div>
-                            <p className="text-sm font-semibold text-[#6b6b80]">Start a conversation</p>
+                            <p className="text-sm font-semibold text-[#6b6b80]">Mulai Percakapan Baru</p>
                             <p className="text-xs text-[#3a3a50] mt-1 leading-relaxed max-w-[180px]">
-                                Describe your design and I&apos;ll generate it. Type @ to mention a layer!
+                                Jelaskan kebutuhan desain UMKM Anda dan Asisten AI akan membuatnya. Ketik @ untuk menyebut nama layer!
                             </p>
                         </div>
                         {/* Quick start suggestions */}
                         <div className="w-full space-y-1.5">
                             {[
-                                "Logo kopi modern, warna coklat & emas",
-                                "Poster festival musik indie, vibe neon",
-                                "Stiker karakter anime chef lucu",
+                                "Logo kedai kopi kekinian, warna cokelat & emas",
+                                "Banner promosi diskon produk makanan kuliner",
+                                "Spanduk promo buka toko online diskon 50%",
                             ].map((suggestion) => (
                                 <button
                                     key={suggestion}
@@ -257,7 +257,7 @@ function AIChatTab({
                                             />
                                         ))}
                                     </span>
-                                    <span className="text-xs text-[#6b6b80]">Generating design…</span>
+                                    <span className="text-xs text-[#6b6b80]">Sedang merancang desain untuk Anda…</span>
                                 </div>
                             </div>
                         )}
@@ -326,8 +326,8 @@ function AIChatTab({
                         }}
                         placeholder={
                             hasHistory
-                                ? "Sempurnakan atau ketik @ untuk mention layer…"
-                                : "Jelaskan desain Anda (ketik @ untuk mention layer)…"
+                                ? "Berikan instruksi tambahan atau ketik @ untuk sebut layer…"
+                                : "Jelaskan ide desain UMKM Anda (ketik @ untuk sebut layer)…"
                         }
                         rows={1}
                         disabled={loading}
@@ -337,7 +337,7 @@ function AIChatTab({
                     <button
                         onClick={onSendMessage}
                         disabled={!canSend}
-                        title="Kirim (Enter)"
+                        title="Kirim Perintah (Enter)"
                         className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                         style={{
                             background: canSend
@@ -361,7 +361,7 @@ function AIChatTab({
                     </button>
                 </div>
                 <p className="text-[10px] text-[#3a3a50] mt-1.5 text-center">
-                    Tekan Enter untuk kirim · Ketik @ untuk mention layer objek
+                    Tekan Enter untuk mengirim · Ketik @ untuk menyebut layer objek
                 </p>
             </div>
         </div>
@@ -389,9 +389,9 @@ function PropertiesTab({
                     </svg>
                 </div>
                 <div>
-                    <p className="text-sm font-semibold text-[#6b6b80]">No selection</p>
+                    <p className="text-sm font-semibold text-[#6b6b80]">Belum Ada Elemen Dipilih</p>
                     <p className="text-xs text-[#3a3a50] mt-1 leading-relaxed">
-                        Select an element on the canvas to edit its properties.
+                        Pilih salah satu elemen pada kanvas untuk mengubah propertinya (warna, posisi, teks).
                     </p>
                 </div>
             </div>
@@ -457,7 +457,7 @@ function PropertiesTab({
             <div className="p-4 space-y-5">
                 {/* Fill Color */}
                 <div className="space-y-2">
-                    <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8] block">Fill Color</span>
+                    <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8] block">Warna Isian</span>
                     {isPattern ? (
                         <div className="flex items-center justify-between p-2 rounded-lg border border-violet-500/30 bg-[#161622] text-xs">
                             <div className="flex items-center gap-2 truncate">
@@ -468,7 +468,7 @@ function PropertiesTab({
                                 onClick={() => onChangeProperty("fill", "#3b82f6")}
                                 className="px-2 py-0.5 text-[10px] font-semibold text-violet-300 hover:text-white bg-violet-900/40 hover:bg-violet-800/60 rounded border border-violet-700/50 transition-colors shrink-0"
                             >
-                                Ganti Hex
+                                Ubah Hex
                             </button>
                         </div>
                     ) : (
@@ -498,7 +498,7 @@ function PropertiesTab({
                 {/* Text Content */}
                 {isText && (
                     <div className="space-y-2">
-                        <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8] block">Text Content</span>
+                        <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8] block">Isi Teks</span>
                         <textarea
                             value={textVal}
                             onChange={(e) => onChangeProperty("text", e.target.value)}
@@ -513,7 +513,7 @@ function PropertiesTab({
 
                 {/* Position & Size */}
                 <div className="space-y-3">
-                    <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8] block">Position &amp; Size</span>
+                    <span className="text-[10px] uppercase font-semibold tracking-widest text-[#9090a8] block">Posisi &amp; Ukuran</span>
                     <div className="grid grid-cols-2 gap-3">
                         <NumberField label="X" value={x} onChange={(v) => onChangeProperty("left", v)} />
                         <NumberField label="Y" value={y} onChange={(v) => onChangeProperty("top", v)} />
@@ -550,7 +550,7 @@ export default function RightSidebar({
     const tabs = [
         {
             id: "chat" as const,
-            label: "AI Chat",
+            label: "Obrolan AI",
             icon: (
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -560,7 +560,7 @@ export default function RightSidebar({
         },
         {
             id: "properties" as const,
-            label: "Properties",
+            label: "Properti Elemen",
             icon: (
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />

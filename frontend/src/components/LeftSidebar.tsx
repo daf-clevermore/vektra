@@ -71,9 +71,9 @@ export default function LeftSidebar({
 
     const getObjectTypeLabel = (obj: FabricObject) => {
         const type = obj.type || "Object";
-        if (type.toLowerCase().includes("image")) return "Image";
-        if (type.toLowerCase().includes("text")) return "Text";
-        if (type.toLowerCase().includes("path")) return "Path";
+        if (type.toLowerCase().includes("image")) return "Gambar";
+        if (type.toLowerCase().includes("text")) return "Teks";
+        if (type.toLowerCase().includes("path")) return "Vektor";
         return type.charAt(0).toUpperCase() + type.slice(1);
     };
 
@@ -175,7 +175,7 @@ export default function LeftSidebar({
                 <div className="flex items-center justify-between">
                     <h2 className="text-xs font-semibold text-[#9090a8] uppercase tracking-widest flex items-center gap-2">
                         <DragHandleIcon />
-                        Layers ({objects.length})
+                        Layer & Elemen ({objects.length})
                     </h2>
                 </div>
 
@@ -208,8 +208,8 @@ export default function LeftSidebar({
                             </svg>
                         </div>
                         <div>
-                            <p className="text-xs font-medium text-[#6b6b80]">Belum ada elemen</p>
-                            <p className="text-[10px] text-[#3a3a50] mt-0.5">Generate atau unggah gambar untuk memulai</p>
+                            <p className="text-xs font-medium text-[#6b6b80]">Belum Ada Elemen</p>
+                            <p className="text-[10px] text-[#3a3a50] mt-0.5">Minta AI buatkan desain atau unggah gambar untuk memulai</p>
                         </div>
                     </div>
                 ) : (
@@ -242,16 +242,16 @@ export default function LeftSidebar({
                                 }`}
                             >
                                 <div className="flex items-center gap-1.5 min-w-0 flex-1 mr-1">
-                                    <span className="text-[#3a3a50] group-hover:text-[#6b6b80] cursor-grab transition-colors shrink-0" title="Drag to reorder">
+                                    <span className="text-[#3a3a50] group-hover:text-[#6b6b80] cursor-grab transition-colors shrink-0" title="Tarik untuk mengatur urutan">
                                         <DragHandleIcon />
                                     </span>
                                     <span
                                         className={`px-1.5 py-0.5 text-[9px] uppercase font-bold rounded-md shrink-0 ${
-                                            label === "Image"
+                                            label === "Gambar"
                                                 ? "bg-blue-900/60 text-blue-300"
-                                                : label === "Text"
+                                                : label === "Teks"
                                                 ? "bg-violet-900/60 text-violet-300"
-                                                : label === "Path"
+                                                : label === "Vektor"
                                                 ? "bg-emerald-900/50 text-emerald-400"
                                                 : "bg-amber-900/50 text-amber-400"
                                         }`}
@@ -300,7 +300,7 @@ export default function LeftSidebar({
                                             e.stopPropagation();
                                             onToggleLock(obj);
                                         }}
-                                        title={locked ? "Unlock Layer" : "Lock Layer"}
+                                        title={locked ? "Buka Kunci Layer" : "Kunci Layer"}
                                         className={`p-1 rounded-md transition-colors ${
                                             locked
                                                 ? "text-violet-400 bg-violet-900/30"
@@ -315,7 +315,7 @@ export default function LeftSidebar({
                                             e.stopPropagation();
                                             onDeleteObject(obj);
                                         }}
-                                        title="Delete Layer"
+                                        title="Hapus Layer"
                                         className="opacity-0 group-hover:opacity-100 p-1 text-[#6b6b80] hover:text-red-400 hover:bg-red-900/20 rounded-md transition-all"
                                     >
                                         <TrashIcon />

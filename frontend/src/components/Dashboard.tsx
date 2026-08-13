@@ -28,40 +28,40 @@ interface PresetTemplate {
 
 const PRESET_TEMPLATES: PresetTemplate[] = [
     {
-        title: "Poster / Flyer",
-        description: "800 x 1200 px · Vector Art-ready",
+        title: "Poster & Flyer Promosi",
+        description: "800 x 1200 px · Cetak & Digital UMKM",
         width: 800,
         height: 1200,
         bgGradient: "linear-gradient(135deg, #2d1829 0%, #1e121e 100%)",
         borderColor: "rgba(225, 29, 72, 0.2)",
-        tag: "Portrait",
+        tag: "Vertikal",
     },
     {
-        title: "Web Banner",
-        description: "1200 x 630 px · Landscape Social",
+        title: "Spanduk Toko Online",
+        description: "1200 x 630 px · Header Web & E-Commerce",
         width: 1200,
         height: 630,
         bgGradient: "linear-gradient(135deg, #1b263b 0%, #0f172a 100%)",
         borderColor: "rgba(59, 130, 246, 0.2)",
-        tag: "Banner",
+        tag: "Horisontal",
     },
     {
-        title: "Social Media Card",
-        description: "1080 x 1080 px · Instagram Square",
+        title: "Desain Promo Sosmed",
+        description: "1080 x 1080 px · Feed Instagram & FB",
         width: 1080,
         height: 1080,
         bgGradient: "linear-gradient(135deg, #112a29 0%, #061919 100%)",
         borderColor: "rgba(20, 184, 166, 0.2)",
-        tag: "Square",
+        tag: "Persegi",
     },
     {
-        title: "Presentation Slide",
-        description: "1280 x 720 px · 16:9 Pitch Deck",
+        title: "Presentasi Profil Usaha",
+        description: "1280 x 720 px · Proposal & Pitch Deck",
         width: 1280,
         height: 720,
         bgGradient: "linear-gradient(135deg, #241938 0%, #160f24 100%)",
         borderColor: "rgba(168, 85, 247, 0.2)",
-        tag: "16 : 9",
+        tag: "Layar Lebar",
     },
 ];
 
@@ -122,15 +122,15 @@ export default function Dashboard({
         try {
             const diff = Date.now() - new Date(dateStr).getTime();
             const mins = Math.floor(diff / 60000);
-            if (mins < 1) return "Just now";
-            if (mins < 60) return `Edited ${mins}m ago`;
+            if (mins < 1) return "Baru saja";
+            if (mins < 60) return `Diedit ${mins} mnt lalu`;
             const hours = Math.floor(mins / 60);
-            if (hours < 24) return `Edited ${hours}h ago`;
+            if (hours < 24) return `Diedit ${hours} jam lalu`;
             const days = Math.floor(hours / 24);
-            if (days === 1) return "Edited Yesterday";
-            return `Edited ${days} days ago`;
+            if (days === 1) return "Diedit Kemarin";
+            return `Diedit ${days} hari lalu`;
         } catch {
-            return "Edited recently";
+            return "Baru saja diedit";
         }
     };
 
@@ -180,7 +180,7 @@ export default function Dashboard({
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search designs and templates..."
+                            placeholder="Cari desain dan template usaha..."
                             className="w-full pl-10 pr-4 py-1.5 text-xs bg-[#161622] border border-[#262636] rounded-xl text-[#e8e8f0] placeholder-[#4a4a62] focus:outline-none focus:border-violet-500/60 focus:ring-1 focus:ring-violet-500/30 transition-all"
                         />
                         {searchQuery && (
@@ -230,7 +230,7 @@ export default function Dashboard({
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                                 </svg>
-                                All Designs
+                                Semua Desain
                             </span>
                             <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#161622] text-[#6b6b80]">
                                 {projects.filter((p) => !p.isTrash).length}
@@ -249,7 +249,7 @@ export default function Dashboard({
                                 <svg className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                                 </svg>
-                                Favorites
+                                Desain Favorit
                             </span>
                             <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#161622] text-[#6b6b80]">
                                 {projects.filter((p) => p.isFavorite && !p.isTrash).length}
@@ -268,7 +268,7 @@ export default function Dashboard({
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
-                                Trash
+                                Tong Sampah
                             </span>
                             <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#161622] text-[#6b6b80]">
                                 {projects.filter((p) => p.isTrash).length}
@@ -278,10 +278,10 @@ export default function Dashboard({
 
                     <div className="border-t border-[#1a1a24] pt-4">
                         <h3 className="px-3 text-[10px] uppercase font-bold tracking-widest text-[#505068] mb-2">
-                            Folders
+                            Folder Kategori
                         </h3>
                         <div className="space-y-1">
-                            {["Marketing Assets", "Personal Projects"].map((folder) => {
+                            {["Aset Pemasaran", "Desain Produk"].map((folder) => {
                                 const isSel = activeNav === "folders" && selectedFolder === folder;
                                 return (
                                     <button
@@ -338,10 +338,10 @@ export default function Dashboard({
 
                         <div className="relative z-10 max-w-xl space-y-4">
                             <h2 className="text-3xl font-extrabold tracking-tight text-white leading-tight">
-                                Imagine. Design. Generate.
+                                Wujudkan Ide. Buat Desain. Kembangkan Usaha.
                             </h2>
                             <p className="text-sm text-[#9090a8] leading-relaxed">
-                                Combine Vector controls with advanced AI to create world-class posters, banners, and slides instantly.
+                                Padukan kontrol vektor dengan AI canggih untuk membuat poster, spanduk, dan materi promosi UMKM dalam hitungan detik.
                             </p>
                             <div className="pt-2">
                                 <button
@@ -351,7 +351,7 @@ export default function Dashboard({
                                     <svg className="w-4 h-4 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
-                                    Create with AI Assistant
+                                    Buat Desain dengan Asisten AI
                                 </button>
                             </div>
                         </div>
@@ -360,7 +360,7 @@ export default function Dashboard({
                     {/* ── 2. Quick Start Templates ───────────────────────────────────── */}
                     <section className="space-y-4">
                         <h3 className="text-base font-bold tracking-tight text-white">
-                            Quick Start Templates
+                            Template Siap Pakai UMKM
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {PRESET_TEMPLATES.map((tmpl) => (
@@ -401,7 +401,7 @@ export default function Dashboard({
                     <section className="space-y-4 pb-12">
                         <div className="flex items-center justify-between">
                             <h3 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                                Recent Projects
+                                Desain Terbaru
                                 <span className="text-xs font-normal text-[#6b6b80]">
                                     ({filteredProjects.length})
                                 </span>
@@ -415,12 +415,12 @@ export default function Dashboard({
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                     </svg>
                                 </div>
-                                <p className="text-sm font-semibold text-[#808098]">Tidak ada proyek ditemukan</p>
+                                <p className="text-sm font-semibold text-[#808098]">Belum ada desain ditemukan</p>
                                 <button
                                     onClick={() => onCreateProject()}
                                     className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-violet-600 hover:bg-violet-500 transition-colors"
                                 >
-                                    + Buat Proyek Baru
+                                    + Buat Desain Baru
                                 </button>
                             </div>
                         ) : (
@@ -454,7 +454,7 @@ export default function Dashboard({
                                                         <svg className="w-8 h-8 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                         </svg>
-                                                        <span className="text-[10px] font-mono tracking-wider">Canvas Blank</span>
+                                                        <span className="text-[10px] font-mono tracking-wider">Kanvas Kosong</span>
                                                     </div>
                                                 )}
 
@@ -464,7 +464,7 @@ export default function Dashboard({
                                                         e.stopPropagation();
                                                         onToggleFavorite(p.id);
                                                     }}
-                                                    title={p.isFavorite ? "Unfavorite" : "Favorite"}
+                                                    title={p.isFavorite ? "Hapus dari Favorit" : "Tambah ke Favorit"}
                                                     className="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white hover:scale-110 transition-transform"
                                                 >
                                                     <svg

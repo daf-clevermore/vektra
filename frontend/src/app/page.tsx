@@ -22,13 +22,13 @@ import {
 
 // Canvas size presets
 const CANVAS_PRESETS = [
-    { label: "1:1 (Square)", width: 800, height: 800 },
-    { label: "16:9 (Widescreen)", width: 1280, height: 720 },
-    { label: "4:3 (Standard)", width: 800, height: 600 },
-    { label: "3:2 (Photo)", width: 900, height: 600 },
-    { label: "9:16 (Mobile)", width: 720, height: 1280 },
-    { label: "A4 (Portrait)", width: 595, height: 842 },
-    { label: "A4 (Landscape)", width: 842, height: 595 },
+    { label: "1:1 (Feed Sosmed)", width: 800, height: 800 },
+    { label: "16:9 (Spanduk / Slide)", width: 1280, height: 720 },
+    { label: "4:3 (Katalog Produk)", width: 800, height: 600 },
+    { label: "3:2 (Foto Produk)", width: 900, height: 600 },
+    { label: "9:16 (Story Instagram / WA)", width: 720, height: 1280 },
+    { label: "A4 (Brosur / Pamflet)", width: 595, height: 842 },
+    { label: "A4 (Sertifikat / Menu)", width: 842, height: 595 },
 ];
 
 export default function Home() {
@@ -1196,10 +1196,10 @@ export default function Home() {
                         />
                         <span className="text-xs text-[#9090a8] font-medium">
                             {loading
-                                ? "Generating design…"
+                                ? "Sedang merancang desain…"
                                 : chatHistory.length > 0
-                                ? `${Math.floor(chatHistory.length / 2)} turn${Math.floor(chatHistory.length / 2) !== 1 ? "s" : ""} · ${chatHistory.filter((m) => m.role === "user").slice(-1)[0]?.content.slice(0, 40) ?? ""}…`
-                                : "Start chatting in the AI Chat panel →"}
+                                ? `${Math.floor(chatHistory.length / 2)} percakapan · ${chatHistory.filter((m) => m.role === "user").slice(-1)[0]?.content.slice(0, 40) ?? ""}…`
+                                : "Mulai percakapan di panel Obrolan AI →"}
                         </span>
                     </div>
                 </div>
@@ -1209,14 +1209,14 @@ export default function Home() {
                     {/* Sesi Project button */}
                     <button
                         onClick={() => setProjectDrawerOpen(true)}
-                        title="Kelola Sesi Project & Riwayat Desain"
+                        title="Kelola Daftar Proyek & Riwayat Desain"
                         className={darkUtilBtn}
                     >
                         <svg className="w-3.5 h-3.5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                         </svg>
                         <span className="max-w-[120px] truncate">
-                            {projects.find((p) => p.id === activeProjectId)?.name || "Sesi Project"}
+                            {projects.find((p) => p.id === activeProjectId)?.name || "Proyek Desain"}
                         </span>
                     </button>
 
@@ -1225,7 +1225,7 @@ export default function Home() {
                         <button
                             onClick={() => setSizeMenuOpen((o) => !o)}
                             disabled={loading}
-                            title="Resize canvas — pick a template or enter a custom size"
+                            title="Ubah ukuran kanvas — pilih template atau masukkan ukuran kustom"
                             className={darkUtilBtn}
                         >
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1246,7 +1246,7 @@ export default function Home() {
                             <div className="absolute right-0 top-full mt-1.5 w-72 bg-[#1e1e2a] border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 p-3 z-50 select-none">
                                 {/* Template presets */}
                                 <p className="text-[10px] uppercase font-bold text-[#6b6b80] tracking-widest mb-2">
-                                    Template Sizes
+                                    Ukuran Template UMKM
                                 </p>
                                 <div className="grid grid-cols-1 gap-0.5">
                                     {CANVAS_PRESETS.map((p) => {
@@ -1284,7 +1284,7 @@ export default function Home() {
                                 {/* Custom size */}
                                 <div className="mt-3 pt-3 border-t border-[#2a2a38]">
                                     <p className="text-[10px] uppercase font-bold text-[#6b6b80] tracking-widest mb-2">
-                                        Custom Size (px)
+                                        Ukuran Kustom (px)
                                     </p>
                                     <div className="flex items-center gap-2">
                                         <label className="flex-1 flex items-center gap-1.5">
@@ -1315,7 +1315,7 @@ export default function Home() {
                                             />
                                         </label>
                                     </div>
-                                    <p className="text-[10px] text-[#4a4a60] mt-1.5">50 – 5000 px · resizes instantly</p>
+                                    <p className="text-[10px] text-[#4a4a60] mt-1.5">50 – 5000 px · berubah secara langsung</p>
                                 </div>
 
                                 {objects.length > 0 && (
@@ -1323,7 +1323,7 @@ export default function Home() {
                                         <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
                                         </svg>
-                                        Existing elements keep their size and won't auto-resize.
+                                        Elemen yang ada mempertahankan ukurannya dan tidak akan otomatis berubah.
                                     </p>
                                 )}
                             </div>
@@ -1333,7 +1333,7 @@ export default function Home() {
                     <button
                         onClick={handleUndo}
                         disabled={!canvas || history.length <= 1}
-                        title="Undo last action (Ctrl+Z)"
+                        title="Batal tindakan terakhir (Ctrl+Z)"
                         className={darkUtilBtn}
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1345,7 +1345,7 @@ export default function Home() {
                     <button
                         onClick={handleRedo}
                         disabled={!canvas || redoStack.length === 0}
-                        title="Redo last action (Ctrl+Y / Ctrl+Shift+Z)"
+                        title="Ulangi tindakan (Ctrl+Y / Ctrl+Shift+Z)"
                         className={darkUtilBtn}
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1357,24 +1357,24 @@ export default function Home() {
                     <button
                         onClick={handleGroup}
                         disabled={!canvas || !selectedObject || !("toGroup" in selectedObject)}
-                        title="Group selected elements (Ctrl+G)"
+                        title="Kelompokkan elemen yang dipilih (Ctrl+G)"
                         className={darkUtilBtn}
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
                         </svg>
-                        Group
+                        Grup
                     </button>
                     <button
                         onClick={handleUngroup}
                         disabled={!canvas || !selectedObject || !("toActiveSelection" in selectedObject)}
-                        title="Ungroup elements (Ctrl+Shift+G)"
+                        title="Pisahkan kelompok elemen (Ctrl+Shift+G)"
                         className={darkUtilBtn}
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h8" />
                         </svg>
-                        Ungroup
+                        Pisahkan
                     </button>
 
                     {/* Alignment Tools — dropdown popover, visible saat ada objek dipilih */}
@@ -1384,14 +1384,14 @@ export default function Home() {
                             <div ref={alignMenuRef} className="relative">
                                 <button
                                     onClick={() => setAlignMenuOpen((o) => !o)}
-                                    title="Align / Distribute elements"
+                                    title="Ratakan & atur posisi elemen"
                                     className={`${darkUtilBtn} ${alignMenuOpen ? "bg-[#2a2a3a] border-[#3a3a50]" : ""}`}
                                 >
                                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6h18M3 12h12M3 18h15"/>
                                         <line x1="3" y1="3" x2="3" y2="21" strokeWidth={2} strokeLinecap="round"/>
                                     </svg>
-                                    Align
+                                    Ratakan
                                     <svg className={`w-2.5 h-2.5 text-[#6b6b80] transition-transform ${alignMenuOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
@@ -1399,7 +1399,7 @@ export default function Home() {
 
                                 {alignMenuOpen && (
                                     <div className="absolute top-full mt-2 left-0 z-50 bg-[#18181f] border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 p-3 w-[200px]">
-                                        <p className="text-[10px] uppercase tracking-widest text-[#505068] font-semibold mb-2">Horizontal</p>
+                                        <p className="text-[10px] uppercase tracking-widest text-[#505068] font-semibold mb-2">Horisontal</p>
                                         <div className="flex gap-1 mb-3">
                                             {[
                                                 { dir: "left" as const, title: "Kiri (canvas/group)", icon: <><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h10M4 18h13"/><line x1="4" y1="3" x2="4" y2="21" strokeWidth={2} strokeLinecap="round"/></> },
@@ -1513,7 +1513,7 @@ export default function Home() {
                                 </p>
                                 {objects.length > 0 && (
                                     <p className="text-center text-[10px] text-amber-500/70 mt-1">
-                                        Elements keep their size/position — they won&apos;t auto-resize.
+                                        Ukuran dan posisi elemen tetap dijaga.
                                     </p>
                                 )}
                             </div>
@@ -1524,21 +1524,21 @@ export default function Home() {
                     <div className="absolute bottom-4 right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
                         <button
                             onClick={() => setZoom((z) => Math.max(0.1, Math.round((z - 0.1) * 100) / 100))}
-                            title="Zoom out"
+                            title="Perkecil tampilan"
                             className="w-7 h-7 flex items-center justify-center text-[#9090a8] hover:text-[#e8e8f0] hover:bg-[#2a2a38] rounded-md text-base leading-none transition-colors"
                         >
                             −
                         </button>
                         <button
                             onClick={() => setZoom(1)}
-                            title="Reset to 100%"
+                            title="Riset tampilan ke 100%"
                             className="w-14 h-7 flex items-center justify-center text-xs font-semibold text-[#9090a8] hover:text-[#e8e8f0] hover:bg-[#2a2a38] rounded-md transition-colors"
                         >
                             {Math.round(zoom * 100)}%
                         </button>
                         <button
                             onClick={() => setZoom((z) => Math.min(3, Math.round((z + 0.1) * 100) / 100))}
-                            title="Zoom in"
+                            title="Perbesar tampilan"
                             className="w-7 h-7 flex items-center justify-center text-[#9090a8] hover:text-[#e8e8f0] hover:bg-[#2a2a38] rounded-md text-base leading-none transition-colors"
                         >
                             +
@@ -1546,10 +1546,10 @@ export default function Home() {
                         <div className="w-px h-4 bg-[#2a2a38] mx-0.5" />
                         <button
                             onClick={() => fitCanvasTo(canvasWidth, canvasHeight)}
-                            title="Fit canvas to viewport"
+                            title="Paskan kanvas ke layar"
                             className="px-2 h-7 text-xs font-semibold text-[#9090a8] hover:text-[#e8e8f0] hover:bg-[#2a2a38] rounded-md transition-colors"
                         >
-                            Fit
+                            Pas Layar
                         </button>
                     </div>
                 </main>
