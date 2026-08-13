@@ -68,6 +68,9 @@ export default function Home() {
     const [mobileLeftOpen, setMobileLeftOpen] = useState(false);
     const [mobileRightOpen, setMobileRightOpen] = useState(false);
 
+    // Global Image Upload File Input Ref
+    const globalImageInputRef = useRef<HTMLInputElement>(null);
+
     // Workspace viewport (used to compute "Fit" zoom) + current zoom factor
     const workspaceRef = useRef<HTMLDivElement>(null);
     const [zoom, setZoom] = useState(1);
@@ -587,8 +590,9 @@ export default function Home() {
             setObjects([...fc.getObjects()]);
             setSelectedObject(img);
             handleHistorySnapshot();
+            showToast("success", "Gambar berhasil ditambahkan ke kanvas!");
         });
-    }, [handleHistorySnapshot]);
+    }, [handleHistorySnapshot, showToast]);
 
     // ---- Rename Layer Object Handler ----
     const handleRenameObject = useCallback((obj: FabricObject, newName: string) => {
@@ -1228,14 +1232,33 @@ export default function Home() {
                     {toastMessage.text}
                 </div>
             )}
+            {/* ── Hidden Global Image File Input ──────────────────────── */}
+            <input
+                type="file"
+                ref={globalImageInputRef}
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const dataUrl = evt.target?.result as string;
+                        if (dataUrl) handleUploadImage(dataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                    e.target.value = "";
+                }}
+            />
+
             {/* ── Top Header Bar ──────────────────────────────────────── */}
             <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-[#16161e] border-b border-[#2a2a38] shrink-0 gap-2 overflow-hidden relative">
                 {/* Logo & Back to Dashboard (Fixed on left, never overlapped) */}
-                <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-10 bg-[#16161e] pr-2">
+                <div className="flex items-center gap-2 shrink-0 z-20 bg-[#16161e] border-r border-[#2a2a38]/40 pr-2">
                     <button
                         onClick={() => setViewMode("dashboard")}
                         title="Kembali ke Dashboard Utama"
-                        className="flex items-center gap-2.5 group focus:outline-none"
+                        className="flex items-center gap-2 group focus:outline-none"
                     >
                         <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-violet-900/40 group-hover:scale-105 transition-transform shrink-0">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1251,7 +1274,7 @@ export default function Home() {
                             <h1 className="text-xs sm:text-sm font-bold text-[#e8e8f0] leading-tight tracking-tight group-hover:text-violet-300 transition-colors">
                                 VEKTRA
                             </h1>
-                            <p className="text-[9px] sm:text-[10px] text-[#6b6b80] leading-tight flex items-center gap-1">
+                            <p className="text-[9px] sm:text-[10px] text-[#6b6b80] leading-tight flex items-center gap-1 hidden sm:flex">
                                 <span>← Dashboard</span>
                             </p>
                         </div>
@@ -1328,6 +1351,18 @@ export default function Home() {
                         <span className="max-w-[70px] sm:max-w-[120px] truncate hidden xs:inline">
                             {projects.find((p) => p.id === activeProjectId)?.name || "Proyek Desain"}
                         </span>
+                    </button>
+
+                    {/* Upload Image Button */}
+                    <button
+                        onClick={() => globalImageInputRef.current?.click()}
+                        title="Unggah Gambar ke Kanvas"
+                        className={darkUtilBtn}
+                    >
+                        <svg className="w-3.5 h-3.5 text-violet-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="hidden sm:inline">Gambar</span>
                     </button>
 
                     {/* Canvas Size button + popover */}
@@ -1644,8 +1679,8 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Fixed Floating zoom controls (positioned above bottom chat bar on mobile to prevent overlap) */}
-                    <div className="absolute bottom-28 sm:bottom-24 lg:bottom-4 right-3 sm:right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
+                    {/* Fixed Floating zoom controls (positioned at top-right of canvas on mobile to avoid bottom overlap) */}
+                    <div className="absolute top-3 right-3 lg:top-auto lg:bottom-4 lg:right-4 flex items-center gap-0.5 bg-[#1e1e2a]/90 backdrop-blur-md border border-[#2a2a38] rounded-xl shadow-2xl shadow-black/60 px-1 py-1 select-none z-30">
                         <button
                             onClick={() => setZoom((z) => Math.max(0.1, Math.round((z - 0.1) * 100) / 100))}
                             title="Perkecil tampilan"
@@ -1692,6 +1727,17 @@ export default function Home() {
                             </button>
                         </div>
                         <div className="flex items-end gap-2 bg-[#0d0d14] border border-[#2a2a38] focus-within:border-violet-500/60 rounded-xl p-2 transition-colors">
+                            <button
+                                type="button"
+                                onClick={() => globalImageInputRef.current?.click()}
+                                disabled={loading}
+                                title="Unggah gambar ke kanvas"
+                                className="p-1.5 rounded-lg text-[#808098] hover:text-violet-300 hover:bg-violet-900/30 transition-all shrink-0 mb-0.5"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </button>
                             <textarea
                                 value={chatInput}
                                 onChange={(e) => setChatInput(e.target.value)}
@@ -1745,6 +1791,7 @@ export default function Home() {
                     availableLayers={objects.map((o) => String((o as any).name || "").trim()).filter(Boolean)}
                     mobileOpen={mobileRightOpen}
                     onCloseMobile={() => setMobileRightOpen(false)}
+                    onUploadImage={handleUploadImage}
                 />
             </div>
 
