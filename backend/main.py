@@ -14,6 +14,8 @@ from openai import OpenAI
 from typing import List, Dict
 import json
 import re
+import urllib.request
+import urllib.error
 from layout_templates import buildLayoutPromptReference
 
 # --- Pydantic Schemas ---
@@ -95,6 +97,63 @@ def get_openai_client() -> OpenAI:
         api_key=api_key,
         base_url=base_url,
     )
+
+
+def call_google_native_api(system_prompt: str, messages: List[ChatMessage], api_key: str, preferred_model: str = "gemini-2.5-flash") -> str:
+    """Fallback native REST API call to Google AI Studio generateContent endpoint."""
+    models_to_try = [preferred_model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-pro"]
+    unique_models = []
+    for m in models_to_try:
+        if m and m not in unique_models:
+            unique_models.append(m)
+
+    contents = []
+    for m in messages:
+        role = "user" if m.role == "user" else "model"
+        contents.append({
+            "role": role,
+            "parts": [{"text": m.content}]
+        })
+
+    last_error = None
+    for model in unique_models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        payload = {
+            "system_instruction": {
+                "parts": [{"text": system_prompt}]
+            },
+            "contents": contents,
+            "generationConfig": {
+                "temperature": 0.7
+            }
+        }
+        data = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+        try:
+            print(f"[INFO] Fallback -> Requesting native Google REST API with model: {model}")
+            with urllib.request.urlopen(req) as resp:
+                res_data = json.loads(resp.read().decode("utf-8"))
+                candidates = res_data.get("candidates", [])
+                if not candidates or "content" not in candidates[0]:
+                    raise ValueError(f"Google REST API returned unexpected structure: {res_data}")
+                text = candidates[0]["content"]["parts"][0]["text"]
+                print(f"[SUCCESS] Native Google REST API succeeded with model: {model}")
+                return text
+        except urllib.error.HTTPError as http_err:
+            err_body = http_err.read().decode("utf-8", errors="ignore")
+            print(f"[WARN] Native Google API call for model '{model}' failed (HTTP {http_err.code}): {err_body[:200]}")
+            if http_err.code == 404:
+                continue
+            raise ValueError(f"Google AI API Error ({http_err.code}): {err_body}")
+        except Exception as e:
+            last_error = e
+            print(f"[WARN] Native Google API call for model '{model}' failed: {e}")
+            continue
+
+    if last_error:
+        raise last_error
+    raise ValueError("All native Google Gemini model endpoints failed.")
+
 
 
 SYSTEM_PROMPT = """You are a Senior Graphic Designer and expert in SVG illustration.
@@ -255,11 +314,11 @@ async def generate_design(request: ChatRequest):
                     raise model_err
 
         if response is None:
-            if last_error:
-                raise last_error
-            raise ValueError("No compatible Gemini model found.")
-
-        raw = response.choices[0].message.content or ""
+            print("[INFO] OpenAI compatibility endpoint unavailable for candidate models. Falling back to native Google REST API...")
+            api_key = (os.environ.get("GEMINI_API_KEY") or os.environ.get("LLM_API_KEY") or "").strip()
+            raw = call_google_native_api(system_prompt_with_canvas, request.messages, api_key, requested_model)
+        else:
+            raw = response.choices[0].message.content or ""
         svg = clean_svg(raw)
         if not svg.startswith("<svg"):
             raise ValueError(f"LLM did not return a valid SVG document. Raw start: {svg[:200]!r}")
