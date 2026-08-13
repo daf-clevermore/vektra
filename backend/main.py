@@ -84,11 +84,16 @@ def get_openai_client() -> OpenAI:
             "GEMINI_API_KEY tidak ditemukan di environment variables. "
             "Harap tambahkan GEMINI_API_KEY di Railway Environment Variables (Services -> Variables)."
         )
-    base_url = os.environ.get("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
+    raw_base_url = os.environ.get("LLM_BASE_URL", "").strip()
+    if not raw_base_url or "localhost" in raw_base_url or "20128" in raw_base_url:
+        base_url = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    else:
+        base_url = raw_base_url if raw_base_url.endswith("/") else f"{raw_base_url}/"
+
+    print(f"[INFO] Initializing OpenAI client -> base_url: {base_url}, api_key length: {len(api_key)}")
     return OpenAI(
         api_key=api_key,
         base_url=base_url,
-        default_headers={"x-goog-api-key": api_key},
     )
 
 
